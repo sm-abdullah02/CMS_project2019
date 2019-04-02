@@ -1,0 +1,171 @@
+
+Step :1
+Create Folder "uploads" where your all project files located 
+
+Step :2
+Create Db Of Name "Imageupload"
+After that you need to create table:
+
+
+CREATE TABLE `users` (
+`id` INT( 5 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`image` VARCHAR( 25 ) NOT NULL
+)
+
+
+Step : 3 
+Create Connection File Name Write As "Connect.Php"
+
+
+
+<?php
+
+try{
+$con = new PDO ("mysql:host=localhost;dbname=imageupload","root",""); 
+$con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+echo "connected";
+}
+catch(PDOException $e)
+{
+echo "error:".$e->getMessage(); 
+}
+
+?>
+
+Step : 4 
+Create Index.Php File 
+
+
+
+<?php 
+
+include "connect.php";
+
+if(isset($_POST['ok'])) 
+
+{ 
+
+$folder ="uploads/"; 
+
+$image = $_FILES['image']['name']; 
+
+$path = $folder . $image ; 
+
+$target_file=$folder.basename($_FILES["image"]["name"]);
+
+ 
+ $imageFileType=pathinfo($target_file,PATHINFO_EXTENSION);
+
+ 
+$allowed=array('jpeg','png' ,'jpg'); 
+$filename=$_FILES['image']['name']; 
+
+$ext=pathinfo($filename, PATHINFO_EXTENSION); if(!in_array($ext,$allowed) ) 
+
+{ 
+
+ echo "Sorry, only JPG, JPEG, PNG & GIF  files are allowed.";
+
+}
+
+else{ 
+
+move_uploaded_file( $_FILES['image'] ['tmp_name'], $path); 
+
+$sth=$con->prepare("insert into users(image)values(:image) "); 
+
+$sth->bindParam(':image',$image); 
+
+$sth->execute(); 
+
+} 
+
+} 
+
+?> 
+
+<form method="POST" enctype="multipart/form-data"> 
+
+<input type="file" name="image" /> 
+
+<input type="submit" name="ok"/> 
+
+</form>
+
+<a href="select.php">See Image</a>
+
+
+
+
+Step : 5 
+Create Select.Php File
+
+
+<table border="2">
+<tr>
+<th>ID</th>
+<th>Image</th>
+</tr>
+<?php
+include "connect.php";
+$select = $con->prepare("SELECT * FROM users ");
+$select->setFetchMode(PDO::FETCH_ASSOC);
+$select->execute();
+while($data=$select->fetch()){
+?><tr>
+<td><?php echo $data['id']; ?></td>
+<td><img src="uploads/<?php echo $data['image']; ?>" width="100" height="100"></td>
+<?php
+}?>
+</tr></table>
+<a href="index.php">Add new image</a>
+SHARE
+Labels
+Tutorials
+LABELS: TUTORIALS
+SHARE
+Comments
+ 
+
+ 
+Popular posts from this blog
+PHP PDO Tutorials: PHP Registration and Login form Using database
+November 16, 2016
+PHP PDO Tutorials PHP Registration and Login form Using database HINDI URDU Create Db of Name "Mujahid"After that you need to create table:
+
+
+CREATE TABLE `users` ( `id` INT( 5 ) NOT NULL AUTO_INCREMENT PRIMARY KEY , `name` VARCHAR( 25 ) NOT NULL , `email` VARCHAR( 25 ) NOT NULL , `pass` VARCHAR( 25 ) NOT NULL, `date` VARCHAR( 25 ) NOT NULL, `month` VARCHAR( 25 ) NOT NULL, `year` VARCHAR( 25 ) NOT NULL ) 
+Create first file name write as "Index.php"
+
+
+<?php session_start(); try{ $con = new PDO ("mysql:host=localhost;dbname=mujahid","root",""); if(isset($_POST['signup'])){ $name = $_POST['name']; $email = $_POST['email']; $pass = $_POST['pass']; $date = $_POST['date']; $month = $_POST['month']; $year = $_POST['year']; $insert = $con->prepare("INSERT INTO users (name,email,pass,date,month,year) values(:name,:email,:pass,:date,:month,:year) "); $insert->bindParam…
+SHARE
+ POST A COMMENT
+READ MORE
+PHP PDO CRUD - Connect - Insert - Select - Update - Delete
+November 16, 2016
+Create Db of Name "pdourdu"After that you need to create table:
+
+
+CREATE TABLE `users` ( `id` INT( 5 ) NOT NULL AUTO_INCREMENT PRIMARY KEY , `email` VARCHAR( 25 ) NOT NULL , `pass` VARCHAR( 25 ) NOT NULL ) 
+Create connection file name write as "connect.php"
+
+
+<?php try{ $con = new PDO ("mysql:host=localhost;dbname=pdourdu","root",""); echo "connected"; } catch(PDOException $e) { echo "error:".$e->getMessage(); } ?> 
+Create Insert.php file 
+
+<?php try{ $con = new PDO ("mysql:host=localhost;dbname=pdourdu","root",""); if(isset($_POST['done'])) { $email = $_POST['email']; $pass = $_POST['pass']; $insert = $con->prepare("INSERT INTO users (email,pass) VALUES(:email,:pass)"); $insert->bindParam(':email',$email); $insert->bindParam(':pass',$pass); $insert->execute(); echo "insert it"; } } catch(PDOException $…
+SHARE
+ POST A COMMENT
+READ MORE
+
+Top Post
+Labels
+Report Abuse
+Facebook
+Random Posts
+Recent Posts
+Recent in Sports
+Header Ads
+ Powered by Blogger
+Just clack

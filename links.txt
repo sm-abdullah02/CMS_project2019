@@ -1,0 +1,3 @@
+http://www.onlyxcodes.com/2018/04/how-to-upload-insert-update-and-delete.html
+https://stackoverflow.com/questions/29547152/php-pdo-file-upload-and-save-to-mysql-database-results-in-obscure-file-breakage
+http://pdocrud.com/demo/pages/new-file-upload

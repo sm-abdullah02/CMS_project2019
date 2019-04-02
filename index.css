@@ -1,0 +1,16 @@
+body{
+	/*background-color: green;*/
+}
+
+#images{
+	width: 25%;
+	height: auto;
+}
+#user_post{
+	border: 1px solid blue;
+	margin: 2px;
+}
+
+ul{
+	list-style-type: none;
+}
