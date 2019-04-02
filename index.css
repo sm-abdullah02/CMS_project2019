@@ -2,6 +2,10 @@ body{
 	/*background-color: green;*/
 }
 
+a:link {
+	color:#39F;
+}
+
 #images{
 	width: 25%;
 	height: auto;
